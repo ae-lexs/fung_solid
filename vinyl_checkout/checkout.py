@@ -8,7 +8,9 @@ class Checkout(object):
     def execute(self):
         order = Order()
         payment_processor: PaymentProcessor = get_payment_processor(
-            payment_method=PaymentMethod.DEBIT,
+            payment_method=PaymentMethod.CRYPTO,
+            security_code='120b4',
+            email='alexis@gmail.com',
         )
 
         order.add_item(
@@ -33,7 +35,6 @@ class Checkout(object):
 
         payment_processor.execute(
             order=order,
-            security_code='120b4',
         )
 
         print('Order Status: {order_status}'.format(
