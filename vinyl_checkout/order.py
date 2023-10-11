@@ -29,6 +29,7 @@ class Order(object):
             print('Verifying Security Code: {security_code}'.format(
                 security_code=security_code,
             ))
+            self.status = 'PAID'
         elif payment_method == PaymentMethod.CREDIT.value:
             print('Processing Credit Payment Type')
             print('Verifying Security Code: {security_code}'.format(
