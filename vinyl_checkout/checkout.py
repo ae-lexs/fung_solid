@@ -1,10 +1,19 @@
-from order import Order
 from entity.enums import PaymentMethod
+from order_manager.interfaces import OrderManager
+from order_manager.amazon import AmazonOrderManager
+from payment_processor.interfaces import PaymentProcessor
+from payment_processor.factory import get_payment_processor
 
 
 class Checkout(object):
     def execute(self):
-        order = Order()
+        order: OrderManager = AmazonOrderManager()
+        payment_processor: PaymentProcessor = get_payment_processor(
+            payment_method=PaymentMethod.CRYPTO,
+            security_code='120b4',
+            email='alexis@gmail.com',
+        )
+
         order.add_item(
             name='Alvvays, Blue Rev',
             price=100.20,
@@ -21,14 +30,17 @@ class Checkout(object):
             quantity=1,
         )
 
-        print('Total Price {total_price}'.format(
-            total_price=order.total_price(),
+        print('Order Status: {order_status}'.format(
+            order_status=order.status.value,
         ))
 
-        order.pay(
-            payment_method=PaymentMethod.DEBIT.value,
-            security_code='120b4',
+        payment_processor.execute(
+            order=order,
         )
+
+        print('Order Status: {order_status}'.format(
+            order_status=order.status.value,
+        ))
 
 
 Checkout().execute()
