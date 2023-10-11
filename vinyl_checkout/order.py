@@ -1,14 +1,14 @@
 from typing import List
 
 from entity.errors import InvalidPaymentMethodError
-from entity.enums import PaymentMethod
+from entity.enums import OrderStatus, PaymentMethod
 
 
 class Order(object):
     items: List[str] = []
     prices: List[float] = []
     quantities: List[int] = []
-    status: str = 'OPEN'
+    status: OrderStatus = OrderStatus.PENDING
 
     def add_item(self, name: str, price: float, quantity: int) -> None:
         self.items.append(name)
@@ -29,12 +29,12 @@ class Order(object):
             print('Verifying Security Code: {security_code}'.format(
                 security_code=security_code,
             ))
-            self.status = 'PAID'
+            self.status = OrderStatus.PROCESSED
         elif payment_method == PaymentMethod.CREDIT.value:
             print('Processing Credit Payment Type')
             print('Verifying Security Code: {security_code}'.format(
                 security_code=security_code,
             ))
-            self.status = 'PAID'
+            self.status = OrderStatus.PROCESSED
         else:
             raise InvalidPaymentMethodError
