@@ -1,4 +1,4 @@
-from order import Order
+from order_manager.interfaces import OrderManager
 from payment_processor.interfaces import MasterCardPaymentProcessor
 
 
@@ -11,7 +11,7 @@ class CreditPaymentProcessor(MasterCardPaymentProcessor):
             sms_code=sms_code,
         ))
 
-    def execute(self, order: Order) -> None:
+    def execute(self, order: OrderManager) -> None:
         print('Processing Credit Payment Method')
         self.sms_validation(sms_code='893251')
         print('Total: {order_total}'.format(
