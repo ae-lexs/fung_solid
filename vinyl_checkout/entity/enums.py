@@ -8,4 +8,5 @@ class OrderStatus(Enum):
 
 class PaymentMethod(Enum):
     CREDIT = 'CREDIT'
+    CRYPTO = 'CRYPTO'
     DEBIT = 'DEBIT'
